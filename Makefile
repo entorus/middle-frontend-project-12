@@ -1,6 +1,6 @@
 build:
 	rm -rf frontend/dist
-	npm run build
+	npm run build --prefix frontend
 install:
 	npm ci
 start:
