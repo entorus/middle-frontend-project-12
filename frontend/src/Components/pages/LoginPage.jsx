@@ -1,6 +1,22 @@
+import { Formik } from 'formik'
+
 const LoginPage = () => (
   <>
-    <h1>Hello</h1>
+    <Formik>
+      <form>
+        <input
+          type="email"
+          name="email"
+        />
+        <input
+          type="password"
+          name="password"
+        />
+        <button type="submit">
+          Submit
+        </button>
+      </form>
+    </Formik>
   </>
 )
 export default LoginPage
