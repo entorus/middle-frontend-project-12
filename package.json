@@ -6,9 +6,6 @@
   "bugs": {
     "url": "https://github.com/entorus/middle-frontend-project-12/issues"
   },
-  "workspaces": [
-    "frontend"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/entorus/middle-frontend-project-12.git"

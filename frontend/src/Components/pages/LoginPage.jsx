@@ -4,17 +4,9 @@ const LoginPage = () => (
   <>
     <Formik>
       <form>
-        <input
-          type="email"
-          name="email"
-        />
-        <input
-          type="password"
-          name="password"
-        />
-        <button type="submit">
-          Submit
-        </button>
+        <input type="email" name="email" />
+        <input type="password" name="password" />
+        <button type="submit">Submit</button>
       </form>
     </Formik>
   </>
