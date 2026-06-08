@@ -34,7 +34,8 @@ export default defineConfig([
     },
     rules: {
       '@stylistic/semi': ['error', 'never'],
-      '@stylistic/indent': ['error', 2]
+      '@stylistic/indent': ['error', 2],
+      'quotes': ['error', 'single']
     }
   },
 
