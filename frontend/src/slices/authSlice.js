@@ -16,7 +16,6 @@ const slice = createSlice({
         payload: { user, token },
       },
     ) => {
-      console.log(33333)
       state.user = user
       state.token = token
       state.isAuth = true

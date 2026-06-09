@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Form, Field, Formik, ErrorMessage } from 'formik'
-import axios from 'axios'
+import { auth } from '../../api/queries/auth'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { setCredentials, checkUserAuthenticated } from '../../slices/authSlice'
@@ -17,24 +17,20 @@ const LoginPage = () => {
   }, [isAuthenticated, navigate])
 
   const [serverError, setServerError] = useState('')
-  const handleSubmit = ({ username, password }, actions) => {
+  const handleSubmit = async ({ username, password }, actions) => {
     setServerError('')
-    axios.post('/api/v1/login', { username, password })
-      .then((response) => {
-        console.log(response.data) // todo remove
-        const token = response.data.token
-        const user = { user: username, token }
-        dispatch(setCredentials(user))
-        navigate('/')
-      })
-      .catch(error => {
-        if (error.response && error.response.data) {
-          const errorMessage = error.response.data.message || 'Неверный логин или пароль'
-          setServerError(errorMessage)
-        } else {
-          setServerError('Произошла ошибка соединения с сервером')
-        }
-      })
+    try {
+      const authInfo = await auth.login({ username, password })
+      const token = authInfo.token
+      const user = { user: username, token }
+      dispatch(setCredentials(user))
+      navigate('/')
+    } catch(error) {
+      const errorMessage = (error.status === 401) ? 'Неверный логин пароль' : error.response?.data?.message ||
+      error.response?.data?.error ||
+      error.message
+      setServerError(errorMessage)
+    }
     actions.setSubmitting(false)
   }
   return (
