@@ -6,6 +6,7 @@ import { fetchChannels } from '../../slices/channelsSlice'
 import { fetchMessages } from '../../slices/messagesSlice'
 import Messages from '../Messages'
 import Channels from '../Channels'
+import { Row, Col } from 'react-bootstrap'
 
 const MainPage = () => {
   const dispatch = useDispatch()
@@ -21,10 +22,14 @@ const MainPage = () => {
     return <Navigate to="/login" replace />
   }
 
-  return <div>
-    <Channels />
-    <Messages />
-  </div>
+  return <Row>
+    <Col>
+      <Channels />
+    </Col>
+    <Col>
+      <Messages />
+    </Col>
+  </Row>
 }
 
 export default MainPage

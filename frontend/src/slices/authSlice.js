@@ -21,10 +21,16 @@ const slice = createSlice({
       state.isAuth = true
       localStorage.setItem('access_token', token)
     },
+    logout: (state) => {
+      state.user = null
+      state.token = null
+      state.isAuth = false
+      localStorage.removeItem('access_token')
+    }
   },
 })
 
-export const { setCredentials } = slice.actions
+export const { setCredentials, logout } = slice.actions
 
 export default slice.reducer
 
