@@ -23,7 +23,7 @@ const MainPage = () => {
   }
 
   return <Row>
-    <Col>
+    <Col md={2}>
       <Channels />
     </Col>
     <Col>

@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux'
-import { ListGroup } from 'react-bootstrap'
+import { Button, ListGroup } from 'react-bootstrap'
 // import {
 //   setCurrentChannelId,
 // } from "../features/channels/channelsSlice";
@@ -12,7 +12,10 @@ function Channels() {
 
   return (
     <div>
-      <h2>Каналы</h2>
+      <div className='d-flex justify-content-between'>
+        <h2>Каналы</h2>
+        <Button size="sm">+</Button>
+      </div>
 
       <ListGroup as="ul">
         {channels.map((channel) => (
