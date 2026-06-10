@@ -17,7 +17,7 @@ function Header() {
       data-bs-theme="dark"
     >
       <Container>
-        <Navbar.Brand href="#">Chat Lesson</Navbar.Brand>
+        <Navbar.Brand href="/">Chat Lesson</Navbar.Brand>
         {isAuthenticated && <Button onClick={handleLogout}>Выйти</Button>}
       </Container>
     </Navbar>

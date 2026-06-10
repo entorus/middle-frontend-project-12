@@ -19,6 +19,7 @@ export const fetchChannels = createAsyncThunk(
 
 const initialState = {
   channels: [],
+  currentChannelId: 1,
   isLoading: false,
   error: null,
 }
@@ -27,6 +28,9 @@ const channelsSlice = createSlice({
   name: 'channels',
   initialState,
   reducers: {
+    setCurrentChannelId(state, action) {
+      state.currentChannelId = action.payload
+    },
     clearChannels(state) {
       state.channels = []
       state.error = null
@@ -52,6 +56,6 @@ const channelsSlice = createSlice({
   },
 })
 
-export const { clearChannels } = channelsSlice.actions
+export const { clearChannels, setCurrentChannelId } = channelsSlice.actions
 
 export default channelsSlice.reducer
