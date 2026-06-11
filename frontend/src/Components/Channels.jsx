@@ -1,13 +1,12 @@
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Button, ListGroup, Modal } from 'react-bootstrap'
 import { Form, Field, Formik, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
-// import {
-//   setCurrentChannelId,
-// } from "../features/channels/channelsSlice";
+import { setCurrentChannelId } from '../slices/channelsSlice'
 
 function Channels() {
+  const dispatch = useDispatch()
   const [showAddModal, setShowAddModal] = useState(false)
 
   const { channels, currentChannelId } = useSelector(
@@ -57,7 +56,7 @@ function Channels() {
         {channels.map((channel) => (
           <ListGroup.Item 
             action 
-            //   onClick={() => dispatch(setCurrentChannelId(channel.id))}
+            onClick={() => dispatch(setCurrentChannelId(channel.id))}
             as="li" 
             key={channel.id}
             disabled={channel.id === currentChannelId}

@@ -29,7 +29,8 @@ const channelsSlice = createSlice({
   initialState,
   reducers: {
     setCurrentChannelId(state, action) {
-      state.currentChannelId = action.payload
+      state.currentChannelId = Number(action.payload)
+      console.log(222, state.currentChannelId)
     },
     clearChannels(state) {
       state.channels = []
