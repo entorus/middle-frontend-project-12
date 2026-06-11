@@ -17,8 +17,8 @@ export const fetchMessages = createAsyncThunk(
   }
 )
 
-export const addMessage = createAsyncThunk(
-  'messages/addMessage',
+export const fetchMessage = createAsyncThunk(
+  'messages/fetchMessage',
   async ({ body, channelId, username }, { rejectWithValue }) => {
     try {
       const newMessage = await messages.add( body, channelId, username)
@@ -43,7 +43,11 @@ const initialState = {
 const messagesSlice = createSlice({
   name: 'messages',
   initialState,
-  reducers: {},
+  reducers: {
+    addMessage(state, action) {
+      state.items.push(action.payload)
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchMessages.pending, (state) => {
@@ -53,27 +57,27 @@ const messagesSlice = createSlice({
       .addCase(fetchMessages.fulfilled, (state, action) => {
         state.isLoading = false
         state.items = action.payload
-        console.log(333, state.items)
       })
       .addCase(fetchMessages.rejected, (state, action) => {
         state.isLoading = false
         state.error = action.payload || 'Ошибка загрузки сообщений'
       })
-      .addCase(addMessage.pending, (state) => {
+      .addCase(fetchMessage.pending, (state) => {
         state.sendStatus = 'loading'
         state.sendError = null
       })
 
-      .addCase(addMessage.fulfilled, (state, action) => {
+      .addCase(fetchMessage.fulfilled, (state) => {
         state.sendStatus = 'succeeded'
-        state.items.push(action.payload)
       })
 
-      .addCase(addMessage.rejected, (state, action) => {
+      .addCase(fetchMessage.rejected, (state, action) => {
         state.sendStatus = 'failed'
         state.sendError = action.payload || 'Ошибка отправки сообщения'
       })
   },
 })
+
+export const { addMessage } = messagesSlice.actions
 
 export default messagesSlice.reducer

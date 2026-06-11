@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const tokenFromStorage = localStorage.getItem('access_token')
 
-const slice = createSlice({
+const authSlice = createSlice({
   name: 'auth',
   initialState: { 
     user: null, 
@@ -30,9 +30,9 @@ const slice = createSlice({
   },
 })
 
-export const { setCredentials, logout } = slice.actions
+export const { setCredentials, logout } = authSlice.actions
 
-export default slice.reducer
+export default authSlice.reducer
 
 export const selectCurrentUser = (state) => state.auth.user
 

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button, Form, InputGroup } from 'react-bootstrap'
-import { addMessage } from '../slices/messagesSlice'
+import { fetchMessage } from '../slices/messagesSlice'
 
 function Messages() {
   const [text, setText] = useState('')
@@ -23,7 +23,7 @@ function Messages() {
     if (! trimmedInput)
       return
     await dispatch(
-      addMessage({
+      fetchMessage({
         body: trimmedInput,
         channelId: currentChannelId,
         username,

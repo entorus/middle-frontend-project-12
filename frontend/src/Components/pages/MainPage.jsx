@@ -7,29 +7,37 @@ import { fetchMessages } from '../../slices/messagesSlice'
 import Messages from '../Messages'
 import Channels from '../Channels'
 import { Row, Col } from 'react-bootstrap'
+import SocketProvider from '../SocketProvider'
 
 const MainPage = () => {
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    dispatch(fetchChannels())
-    dispatch(fetchMessages())
-  }, [dispatch])
-
   const isAuth = useSelector(checkUserAuthenticated)
 
-  if (! isAuth) {
-    return <Navigate to="/login" replace />
-  }
+  useEffect(() => {
+    if (!isAuth) {
+      return
+    }
 
-  return <Row>
-    <Col md={2}>
-      <Channels />
-    </Col>
-    <Col>
-      <Messages />
-    </Col>
-  </Row>
+    dispatch(fetchChannels())
+    dispatch(fetchMessages())
+  }, [dispatch, isAuth])
+
+  if (! isAuth)
+    return <Navigate to="/login" replace />
+
+  return (
+    <SocketProvider>
+      <Row>
+        <Col md={2}>
+          <Channels />
+        </Col>
+        <Col>
+          <Messages />
+        </Col>
+      </Row>
+    </SocketProvider>
+  )
 }
 
 export default MainPage
