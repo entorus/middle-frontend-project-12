@@ -10,11 +10,31 @@ import * as Yup from 'yup'
 function Channels() {
   const [showAddModal, setShowAddModal] = useState(false)
 
+  const { channels, currentChannelId } = useSelector(
+    (state) => state.channels
+  )
+
   const validationSchema = Yup.object({
     channelName: Yup.string()
       .min(3, 'Минимум 3 символа')
       .max(20, 'Максимум 20 символов')
-      .required('Введите название канала'),
+      .required('Введите название канала')
+      .test(
+        'is-unique',
+        'Канал с таким названием уже существует',
+        (value) => {
+          if (! value)
+            return true
+
+          const normalizedValue = value.trim().toLowerCase()
+
+          const alreadyExists = channels.some(
+            (channel) => channel.name.trim().toLowerCase() === normalizedValue
+          )
+
+          return ! alreadyExists
+        }
+      )
   })
 
   const handleClose = () => setShowAddModal(false)
@@ -25,10 +45,6 @@ function Channels() {
     actions.setSubmitting(false)
     handleClose()
   }
-
-  const { channels, currentChannelId } = useSelector(
-    (state) => state.channels
-  )
 
   return (
     <div>
