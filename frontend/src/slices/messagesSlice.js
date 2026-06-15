@@ -17,11 +17,11 @@ export const fetchMessages = createAsyncThunk(
   }
 )
 
-export const fetchMessage = createAsyncThunk(
-  'messages/fetchMessage',
+export const sendMessage = createAsyncThunk(
+  'messages/sendMessage',
   async ({ body, channelId, username }, { rejectWithValue }) => {
     try {
-      const newMessage = await messages.add( body, channelId, username)
+      const newMessage = await messages.add(body, channelId, username)
       return newMessage
     } catch (error) {
       return rejectWithValue(
@@ -62,16 +62,17 @@ const messagesSlice = createSlice({
         state.isLoading = false
         state.error = action.payload || 'Ошибка загрузки сообщений'
       })
-      .addCase(fetchMessage.pending, (state) => {
+      .addCase(sendMessage.pending, (state) => {
         state.sendStatus = 'loading'
         state.sendError = null
       })
 
-      .addCase(fetchMessage.fulfilled, (state) => {
+      .addCase(sendMessage.fulfilled, (state, action) => {
         state.sendStatus = 'succeeded'
+        state.items.push(action.payload)
       })
 
-      .addCase(fetchMessage.rejected, (state, action) => {
+      .addCase(sendMessage.rejected, (state, action) => {
         state.sendStatus = 'failed'
         state.sendError = action.payload || 'Ошибка отправки сообщения'
       })
