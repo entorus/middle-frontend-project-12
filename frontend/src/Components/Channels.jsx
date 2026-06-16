@@ -82,6 +82,7 @@ function Channels() {
         })
       )
     }
+    actions.resetForm()
     actions.setSubmitting(false)
     handleClose()
   }
@@ -122,7 +123,6 @@ function Channels() {
             action 
             as="li" 
             key={channel.id}
-            disabled={channel.id === currentChannelId}
             className='nav-item w-100 p-0'
           >
             {channel.removable 

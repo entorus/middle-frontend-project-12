@@ -29,6 +29,7 @@ function Messages() {
         username,
       })
     )
+    setText('')
   }
 
   const handleChange = (event) => {
