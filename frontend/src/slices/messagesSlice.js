@@ -44,9 +44,13 @@ const messagesSlice = createSlice({
   name: 'messages',
   initialState,
   reducers: {
-    addMessage(state, action) {
+    addMessageToState(state, action) {
       state.items.push(action.payload)
     },
+    removeMessagesById(state, action) {
+      console.log(action)
+      state.items = state.items.filter(item => item.channelId != action.payload.id)
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -67,9 +71,8 @@ const messagesSlice = createSlice({
         state.sendError = null
       })
 
-      .addCase(sendMessage.fulfilled, (state, action) => {
+      .addCase(sendMessage.fulfilled, (state) => {
         state.sendStatus = 'succeeded'
-        state.items.push(action.payload)
       })
 
       .addCase(sendMessage.rejected, (state, action) => {
@@ -79,6 +82,6 @@ const messagesSlice = createSlice({
   },
 })
 
-export const { addMessage } = messagesSlice.actions
+export const { addMessageToState, removeMessagesById } = messagesSlice.actions
 
 export default messagesSlice.reducer

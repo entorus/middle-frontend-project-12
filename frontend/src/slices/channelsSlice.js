@@ -17,8 +17,8 @@ export const fetchChannels = createAsyncThunk(
   }
 )
 
-export const addChannel = createAsyncThunk(
-  'channels/addChannel',
+export const createChannel = createAsyncThunk(
+  'channels/createChannel',
   async ({ name }, { rejectWithValue }) => {
     try {
       const data = await channels.add(name)
@@ -38,7 +38,6 @@ export const editChannel = createAsyncThunk(
   async ({ id, name }, { rejectWithValue }) => {
     try {
       const data = await channels.edit(id, name)
-      console.log(11111, data)
       return data
     } catch (error) {
       return rejectWithValue(
@@ -77,6 +76,22 @@ const channelsSlice = createSlice({
   name: 'channels',
   initialState,
   reducers: {
+    addChannelToState(state, action) {
+      state.channels.push(action.payload)
+    },
+    removeChannelFromState(state, action) {
+      const { id } = action.payload
+      state.channels = state.channels.filter(ch => ch.id !== id)
+      console.log(id, state.currentChannelId)
+      if (id == state.currentChannelId) {
+        state.currentChannelId = 1
+      }
+    },
+    renameChannelInState(state, action) {
+      const { id } = action.payload
+      const elIndex = state.channels.findIndex(ch => ch.id === id)
+      state.channels[elIndex] = action.payload
+    },
     setCurrentChannelId(state, action) {
       state.currentChannelId = Number(action.payload)
     },
@@ -102,17 +117,17 @@ const channelsSlice = createSlice({
         state.isLoading = false
         state.error = action.payload || 'Ошибка загрузки каналов'
       })
-      .addCase(addChannel.pending, (state) => {
+      .addCase(createChannel.pending, (state) => {
         state.isLoading = true
         state.error = null
       })
       
-      .addCase(addChannel.fulfilled, (state, action) => {
+      .addCase(createChannel.fulfilled, (state, action) => {
         state.isLoading = false
-        state.channels.push(action.payload)
+        state.currentChannelId = action.payload.id
       })
       
-      .addCase(addChannel.rejected, (state, action) => {
+      .addCase(createChannel.rejected, (state, action) => {
         state.isLoading = false
         state.error = action.payload || 'Ошибка создания канала'
       })
@@ -121,11 +136,8 @@ const channelsSlice = createSlice({
         state.error = null
       })
       
-      .addCase(editChannel.fulfilled, (state, action) => {
+      .addCase(editChannel.fulfilled, (state) => {
         state.isLoading = false
-        const { id } = action.payload
-        const elIndex = state.channels.findIndex(ch => ch.id === id)
-        state.channels[elIndex] = action.payload
       })
       
       .addCase(editChannel.rejected, (state, action) => {
@@ -137,9 +149,7 @@ const channelsSlice = createSlice({
         state.error = null
       })
       
-      .addCase(removeChannel.fulfilled, (state, action) => {
-        const { id } = action.payload
-        state.channels = state.channels.filter(ch => ch.id !== id)
+      .addCase(removeChannel.fulfilled, (state) => {
         state.isLoading = true
         state.error = null
       })
@@ -151,6 +161,12 @@ const channelsSlice = createSlice({
   },
 })
 
-export const { clearChannels, setCurrentChannelId } = channelsSlice.actions
+export const { 
+  addChannelToState, 
+  clearChannels, 
+  removeChannelFromState, 
+  renameChannelInState,
+  setCurrentChannelId 
+} = channelsSlice.actions
 
 export default channelsSlice.reducer

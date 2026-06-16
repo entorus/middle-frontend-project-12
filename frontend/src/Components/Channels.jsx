@@ -21,7 +21,7 @@ import {
 } from 'formik'
 import * as Yup from 'yup'
 import { 
-  addChannel, 
+  createChannel, 
   removeChannel, 
   setCurrentChannelId, 
   editChannel 
@@ -30,7 +30,7 @@ import {
 function Channels() {
   const dispatch = useDispatch()
   const inputRef = useRef(null)
-  const [showAddModal, setShowModal] = useState(false)
+  const [showModal, setShowModal] = useState(false)
   const [modalMode, setModalMode] = useState('create')
   const [selectedChannel, setSelectedChannel] = useState(null)
 
@@ -47,7 +47,7 @@ function Channels() {
         'is-unique',
         'Канал с таким названием уже существует',
         (value) => {
-          if (! value || modalMode === 'edit')
+          if (! value)
             return true
 
           const normalizedValue = value.trim().toLowerCase()
@@ -70,7 +70,7 @@ function Channels() {
   const handleSubmit = async ({ channelName }, actions) => {
     if (modalMode === 'create') {
       await dispatch(
-        addChannel({
+        createChannel({
           name: channelName
         })
       )
@@ -86,9 +86,9 @@ function Channels() {
     handleClose()
   }
 
-  const handleRemove = async (e, id) => {
-    e.preventDefault()
-    await dispatch(removeChannel(id)) // todo add approvial
+  const handleDelete = async ({ id }) => {
+    await dispatch(removeChannel(id))
+    handleClose()
   }
 
   const showEditModal = async (e, channel) => {
@@ -98,6 +98,13 @@ function Channels() {
       inputRef.current?.select()
     })
     setModalMode('edit')
+    setSelectedChannel(channel)
+    setShowModal(true)
+  }
+
+  const showConfirmDeleteModal = async (e, channel) => {
+    e.preventDefault()
+    setModalMode('delete')
     setSelectedChannel(channel)
     setShowModal(true)
   }
@@ -113,7 +120,6 @@ function Channels() {
         {channels.map((channel) => (
           <ListGroup.Item 
             action 
-            onClick={() => dispatch(setCurrentChannelId(channel.id))}
             as="li" 
             key={channel.id}
             disabled={channel.id === currentChannelId}
@@ -122,59 +128,103 @@ function Channels() {
             {channel.removable 
               ? (
                 <Dropdown as={ButtonGroup} className='w-100'>
-                  <Button variant="secondary" className='w-100 rounded-0 text-start text-truncate'># {channel.name}</Button>
+                  <Button onClick={() => dispatch(setCurrentChannelId(channel.id))} variant="secondary" className='w-100 rounded-0 text-start text-truncate'># {channel.name}</Button>
                   <Dropdown.Toggle split variant="secondary" id="dropdown-split-basic" />
                   <Dropdown.Menu>
-                    <Dropdown.Item onClick={(e) => handleRemove(e, channel.id)} href="#">Удалить</Dropdown.Item>
+                    <Dropdown.Item onClick={(e) => showConfirmDeleteModal(e, channel)} href="#">Удалить</Dropdown.Item>
                     <Dropdown.Item onClick={(e) => showEditModal(e, channel)} href="#">Переименовать</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>) 
-              : (<Button variant="light" className='w-100 rounded-0 text-start'># {channel.name}</Button>)}
+              : (<Button onClick={() => dispatch(setCurrentChannelId(channel.id))} variant="light" className='w-100 rounded-0 text-start'># {channel.name}</Button>)}
           </ListGroup.Item>
         ))}
       </ListGroup>
 
       <Formik
-        initialValues={{ channelName: (modalMode === 'create') ? '' : selectedChannel.name }}
-        validationSchema={validationSchema}
+        initialValues={{
+          channelName:
+      modalMode === 'create'
+        ? ''
+        : selectedChannel?.name || '',
+        }}
+        validationSchema={modalMode === 'delete' ? null : validationSchema}
         onSubmit={handleSubmit}
         enableReinitialize
       >
-        {({ errors, touched }) => (
-          <Modal show={showAddModal} onHide={handleClose}>
-            <Modal.Header closeButton>
-              <Modal.Title>{modalMode === 'create' ? 'Добавить' : 'Переименовать'} канал</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-          
-              <Form id="add-channel-form">
-                <Field
-                  type="text"
-                  name="channelName"
-                  ref={inputRef}
-                  className={`form-control ${
-                    errors.channelName && touched.channelName ? 'is-invalid' : ''
-                  }`}
-                  placeholder="Название канала"
-                />
-                <ErrorMessage
-                  component="div"
-                  name="channelName"
-                  className="invalid-feedback"
-                />
-              </Form>
-            
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>
-                Отменить
-              </Button>
-              <Button type="submit" form="add-channel-form" variant="primary">
-                Отправить
-              </Button>
-            </Modal.Footer>
-          </Modal>
-        )}
+        {({ errors, touched }) => {
+          const isDeleteMode = modalMode === 'delete'
+          const isCreateMode = modalMode === 'create'
+
+          const modalTitle = isDeleteMode
+            ? 'Удалить канал'
+            : isCreateMode
+              ? 'Добавить канал'
+              : 'Переименовать канал'
+
+          const submitButtonText = isDeleteMode
+            ? 'Удалить'
+            : 'Отправить'
+
+          const submitButtonVariant = isDeleteMode
+            ? 'danger'
+            : 'primary'
+
+          return (
+            <Modal show={showModal} onHide={handleClose}>
+              <Modal.Header closeButton>
+                <Modal.Title>{modalTitle}</Modal.Title>
+              </Modal.Header>
+
+              <Modal.Body>
+                {isDeleteMode ? (
+                  <p className="mb-0">Уверены?</p>
+                ) : (
+                  <Form id="channel-form">
+                    <Field
+                      type="text"
+                      name="channelName"
+                      innerRef={inputRef}
+                      className={`form-control ${
+                        errors.channelName && touched.channelName ? 'is-invalid' : ''
+                      }`}
+                      placeholder="Название канала"
+                    />
+
+                    <ErrorMessage
+                      component="div"
+                      name="channelName"
+                      className="invalid-feedback"
+                    />
+                  </Form>
+                )}
+              </Modal.Body>
+
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                  Отменить
+                </Button>
+
+                {isDeleteMode ? (
+                  <Button
+                    type="button"
+                    variant={submitButtonVariant}
+                    onClick={() => handleDelete(selectedChannel)}
+                  >
+                    {submitButtonText}
+                  </Button>
+                ) : (
+                  <Button
+                    type="submit"
+                    form="channel-form"
+                    variant={submitButtonVariant}
+                  >
+                    {submitButtonText}
+                  </Button>
+                )}
+              </Modal.Footer>
+            </Modal>
+          )
+        }}
       </Formik>
     </div>
   )
