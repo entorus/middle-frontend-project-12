@@ -8,7 +8,9 @@ const resources = {
         logout: 'Выйти',
       },
       toast: {
-        channelCreated: 'Канал создан'
+        channelCreated: 'Канал создан',
+        channelDeleted: 'Канал удален',
+        channelUpdated: 'Канал обновлен'
       },
       forms: {
         nickname: 'Ваш ник',

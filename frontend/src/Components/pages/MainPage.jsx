@@ -8,6 +8,7 @@ import Messages from '../Messages'
 import Channels from '../Channels'
 import { Row, Col } from 'react-bootstrap'
 import SocketProvider from '../SocketProvider'
+import { toast } from 'react-toastify'
 
 const MainPage = () => {
   const dispatch = useDispatch()
@@ -19,8 +20,12 @@ const MainPage = () => {
       return
     }
 
-    dispatch(fetchChannels())
-    dispatch(fetchMessages())
+    try {
+      dispatch(fetchChannels()).unwrap()
+      dispatch(fetchMessages()).unwrap()
+    } catch (error) {
+      toast.error(error)
+    }
   }, [dispatch, isAuth])
 
   if (! isAuth)

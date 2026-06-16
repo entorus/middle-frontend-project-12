@@ -78,6 +78,7 @@ function Channels() {
             name: channelName
           })
         ).unwrap()
+        toast.success(t('toast.channelCreated'))
       }else{
         await dispatch(
           editChannel({
@@ -85,8 +86,9 @@ function Channels() {
             name: channelName
           })
         ).unwrap()
+        toast.success(t('toast.channelUpdated'))
       }
-      toast.success(t('toast.channelCreated'))
+      
       handleClose()
       actions.resetForm()
     } catch (error) {
@@ -102,8 +104,13 @@ function Channels() {
   }
 
   const handleDelete = async ({ id }) => {
-    await dispatch(removeChannel(id))
-    handleClose()
+    try {
+      await dispatch(removeChannel(id)).unwrap()
+      toast.success(t('toast.channelDeleted'))
+      handleClose()
+    } catch (error) {
+      toast.error(error)
+    }
   }
 
   const showEditModal = async (e, channel) => {
