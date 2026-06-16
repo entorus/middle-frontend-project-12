@@ -10,8 +10,7 @@ export const fetchMessages = createAsyncThunk(
       return rejectWithValue(
         error.response?.data?.message ||
           error.response?.data?.error ||
-          error.message ||
-          'Ошибка загрузки сообщений'
+          error.message
       )
     }
   }
@@ -27,8 +26,7 @@ export const sendMessage = createAsyncThunk(
       return rejectWithValue(
         error.response?.data?.message ||
           error.response?.data?.error ||
-          error.message ||
-          'Ошибка отправки сообщения'
+          error.message
       )
     }
   }

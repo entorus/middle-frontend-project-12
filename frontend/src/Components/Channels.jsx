@@ -26,26 +26,28 @@ import {
   setCurrentChannelId, 
   editChannel 
 } from '../slices/channelsSlice'
+import { useTranslation } from 'react-i18next'
 
 function Channels() {
+  const { t } = useTranslation()
   const dispatch = useDispatch()
   const inputRef = useRef(null)
   const [showModal, setShowModal] = useState(false)
   const [modalMode, setModalMode] = useState('create')
   const [selectedChannel, setSelectedChannel] = useState(null)
 
-  const { channels, currentChannelId } = useSelector(
+  const { channels } = useSelector(
     (state) => state.channels
   )
 
   const validationSchema = Yup.object({
     channelName: Yup.string()
-      .min(3, 'Минимум 3 символа')
-      .max(20, 'Максимум 20 символов')
-      .required('Введите название канала')
+      .min(3, t('validation.min3'))
+      .max(20, t('validation.max20'))
+      .required(t('validation.channelNameRequired'))
       .test(
         'is-unique',
-        'Канал с таким названием уже существует',
+        t('validation.channelNameMustBeUnique'),
         (value) => {
           if (! value)
             return true
@@ -131,8 +133,8 @@ function Channels() {
                   <Button onClick={() => dispatch(setCurrentChannelId(channel.id))} variant="secondary" className='w-100 rounded-0 text-start text-truncate'># {channel.name}</Button>
                   <Dropdown.Toggle split variant="secondary" id="dropdown-split-basic" />
                   <Dropdown.Menu>
-                    <Dropdown.Item onClick={(e) => showConfirmDeleteModal(e, channel)} href="#">Удалить</Dropdown.Item>
-                    <Dropdown.Item onClick={(e) => showEditModal(e, channel)} href="#">Переименовать</Dropdown.Item>
+                    <Dropdown.Item onClick={(e) => showConfirmDeleteModal(e, channel)} href="#">{t('channels.actions.remove')}</Dropdown.Item>
+                    <Dropdown.Item onClick={(e) => showEditModal(e, channel)} href="#">{t('channels.actions.rename')}</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>) 
               : (<Button onClick={() => dispatch(setCurrentChannelId(channel.id))} variant="light" className='w-100 rounded-0 text-start'># {channel.name}</Button>)}
@@ -156,14 +158,14 @@ function Channels() {
           const isCreateMode = modalMode === 'create'
 
           const modalTitle = isDeleteMode
-            ? 'Удалить канал'
+            ? t('channels.modal.removeTitle')
             : isCreateMode
-              ? 'Добавить канал'
-              : 'Переименовать канал'
+              ? t('channels.modal.addTitle')
+              : t('channels.modal.renameTitle')
 
           const submitButtonText = isDeleteMode
-            ? 'Удалить'
-            : 'Отправить'
+            ? t('channels.actions.remove')
+            : t('forms.submit')
 
           const submitButtonVariant = isDeleteMode
             ? 'danger'
@@ -177,7 +179,7 @@ function Channels() {
 
               <Modal.Body>
                 {isDeleteMode ? (
-                  <p className="mb-0">Уверены?</p>
+                  <p className="mb-0">{t('channels.modal.removeConfirmation')}</p>
                 ) : (
                   <Form id="channel-form">
                     <Field
@@ -187,7 +189,7 @@ function Channels() {
                       className={`form-control ${
                         errors.channelName && touched.channelName ? 'is-invalid' : ''
                       }`}
-                      placeholder="Название канала"
+                      placeholder={t('channels.field.name')}
                     />
 
                     <ErrorMessage
@@ -201,7 +203,7 @@ function Channels() {
 
               <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
-                  Отменить
+                  {t('channels.actions.cancel')}
                 </Button>
 
                 {isDeleteMode ? (

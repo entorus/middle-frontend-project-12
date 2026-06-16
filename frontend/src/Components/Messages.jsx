@@ -2,8 +2,10 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button, Form, InputGroup } from 'react-bootstrap'
 import { sendMessage } from '../slices/messagesSlice'
+import { useTranslation } from 'react-i18next'
 
 function Messages() {
+  const { t } = useTranslation()
   const [text, setText] = useState('')
   const dispatch = useDispatch()
   const currentChannelId = useSelector(
@@ -38,7 +40,7 @@ function Messages() {
 
   return (
     <div>
-      <h2>Сообщения</h2>
+      <h2>{t('messages.title')}</h2>
 
       {currentChannelMessages.map((message) => (
         <div key={message.id}>
@@ -51,10 +53,10 @@ function Messages() {
           <Form.Control 
             value={text}
             onChange={handleChange}
-            placeholder="Введите сообщение..." 
+            placeholder={t('messages.input.placeholder')}
           />
           <Button type="submit" variant="outline-secondary" id="button-addon2">
-            Отправить
+            {t('forms.submit')}
           </Button>
         </InputGroup>
       </Form>

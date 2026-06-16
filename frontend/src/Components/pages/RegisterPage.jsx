@@ -6,24 +6,26 @@ import * as Yup from 'yup'
 import { useNavigate } from 'react-router'
 import { auth } from '../../api/queries/auth'
 import { setCredentials } from '../../slices/authSlice'
+import { useTranslation } from 'react-i18next'
 
 function RegisterPage() {
+  const { t } = useTranslation()
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const validationSchema = Yup.object({
     username: Yup.string()
-      .min(3, 'Минимум 3 символа')
-      .max(20, 'Максимум 20 символов')
-      .required('Введите имя пользователя'),
+      .min(3, t('validation.min3'))
+      .max(20, t('validation.max20'))
+      .required(t('validation.usernameRequired')),
 
     password: Yup.string()
-      .min(6, 'Минимум 6 символов')
-      .required('Введите пароль'),
+      .min(6, t('validation.min6'))
+      .required(t('validation.passwordRequired')),
 
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref('password')], 'Пароли должны совпадать')
-      .required('Подтвердите пароль'),
+      .oneOf([Yup.ref('password')], t('validation.confirmPassword.match'))
+      .required(t('validation.confirmPassword.accept')),
   })
 
   const [serverError, setServerError] = useState('')
@@ -36,7 +38,7 @@ function RegisterPage() {
       dispatch(setCredentials(user))
       navigate('/')
     } catch(error) {
-      const errorMessage = (error.status === 401) ? 'Неверный логин пароль' : error.response?.data?.message ||
+      const errorMessage = (error.status === 409) ? t('forms.errors.userExists') : error.response?.data?.message ||
           error.response?.data?.error ||
           error.message
       setServerError(errorMessage)
@@ -56,14 +58,14 @@ function RegisterPage() {
               {({ errors, touched }) => (
                 <Form>
                   <div className="form-group">
-                    <label htmlFor="username">Имя пользователя</label>
+                    <label htmlFor="username">{t('forms.username')}</label>
                     <Field
                       type="text"
                       name="username"
                       className={`form-control ${
                         errors.username && touched.username ? 'is-invalid' : ''
                       }`}
-                      placeholder="Имя пользователя"
+                      placeholder={t('forms.username')}
                     />
                     <ErrorMessage
                       component="div"
@@ -72,14 +74,14 @@ function RegisterPage() {
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="password">Пароль</label>
+                    <label htmlFor="password">{t('forms.password')}</label>
                     <Field
                       type="password"
                       name="password"
                       className={`form-control ${
                         errors.password && touched.password ? 'is-invalid' : ''
                       }`}
-                      placeholder="Пароль"
+                      placeholder={t('forms.password')}
                     />
                     <ErrorMessage
                       component="div"
@@ -88,7 +90,7 @@ function RegisterPage() {
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="confirmPassword">Подтвердите пароль</label>
+                    <label htmlFor="confirmPassword">{t('forms.confirmPassword')}</label>
                     <Field
                       type="password"
                       name="confirmPassword"
@@ -97,7 +99,7 @@ function RegisterPage() {
                           ? 'is-invalid'
                           : ''
                       }`}
-                      placeholder="Подтвердите пароль"
+                      placeholder={t('forms.confirmPassword')}
                     />
                     <ErrorMessage
                       component="div"
@@ -105,8 +107,8 @@ function RegisterPage() {
                       className="invalid-feedback"
                     />
                   </div>
-                  {serverError && <div>{serverError}</div>}
-                  <Button type='submit'>Зарегистрироваться</Button>
+                  {serverError && <div className="text-danger">{serverError}</div>}
+                  <Button type='submit'>{t('forms.signin')}</Button>
                 </Form>
               )}
             </Formik>

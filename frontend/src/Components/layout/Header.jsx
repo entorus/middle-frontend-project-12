@@ -1,8 +1,10 @@
 import { Button, Navbar, Container } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { checkUserAuthenticated, logout } from '../../slices/authSlice'
+import { useTranslation } from 'react-i18next'
 
 function Header() {
+  const { t } = useTranslation()
   const dispatch = useDispatch()
   const isAuthenticated = useSelector(checkUserAuthenticated)
   const handleLogout = () => {
@@ -17,8 +19,8 @@ function Header() {
       data-bs-theme="dark"
     >
       <Container>
-        <Navbar.Brand href="/">Chat Lesson</Navbar.Brand>
-        {isAuthenticated && <Button onClick={handleLogout}>Выйти</Button>}
+        <Navbar.Brand href="/">Hexlet Chat</Navbar.Brand>
+        {isAuthenticated && <Button onClick={handleLogout}>{t('navigation.logout')}</Button>}
       </Container>
     </Navbar>
   )

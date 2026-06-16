@@ -5,8 +5,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router'
 import { setCredentials, checkUserAuthenticated } from '../../slices/authSlice'
 import { Card, Col, Row } from 'react-bootstrap'
+import { useTranslation } from 'react-i18next'
 
 const LoginPage = () => {
+  const { t } = useTranslation()
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const isAuthenticated = useSelector(checkUserAuthenticated)
@@ -46,12 +48,12 @@ const LoginPage = () => {
               {() => (
                 <Form>
                   <div className="form-group">
-                    <label htmlFor="username">Ваш ник</label>
+                    <label htmlFor="username">{t('forms.nickname')}</label>
                     <Field
                       type="text"
                       name="username"
                       className="form-control"
-                      placeholder="Ваш ник"
+                      placeholder={t('forms.nickname')}
                     />
                     <ErrorMessage
                       component="div"
@@ -60,12 +62,12 @@ const LoginPage = () => {
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="password">Пароль</label>
+                    <label htmlFor="password">{t('forms.password')}</label>
                     <Field
                       type="password"
                       name="password"
                       className="form-control"
-                      placeholder="Пароль"
+                      placeholder={t('forms.password')}
                     />
                     <ErrorMessage
                       component="div"
@@ -74,13 +76,13 @@ const LoginPage = () => {
                     />
                   </div>
                   {serverError && <div>{serverError}</div>}
-                  <button type="submit" className="btn btn-primary">Войти</button>
+                  <button type="submit" className="btn btn-primary">{t('forms.enter')}</button>
                 </Form>
               )}
             </Formik>
           </Card.Body>
           <Card.Footer>
-            Нет аккаунта? <Link to='/register'>Регистрация</Link>
+            {t('forms.noAccount')} <Link to='/register'>{t('forms.registration')}</Link>
           </Card.Footer>
         </Card>
       </Col>
