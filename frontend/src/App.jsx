@@ -5,6 +5,8 @@ import RegisterPage from './Components/Pages/RegisterPage'
 import NotFoundPage from './Components/Pages/NotFoundPage'
 import Header from './Components/layout/Header'
 import { Container } from 'react-bootstrap'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 function App() {
   return (
@@ -20,6 +22,14 @@ function App() {
           </Routes>
         </BrowserRouter>
       </Container>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+      />
     </div>
   )
 }

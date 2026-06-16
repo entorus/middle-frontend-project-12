@@ -7,6 +7,9 @@ const resources = {
       navigation: {
         logout: 'Выйти',
       },
+      toast: {
+        channelCreated: 'Канал создан'
+      },
       forms: {
         nickname: 'Ваш ник',
         username: 'Имя пользователя',

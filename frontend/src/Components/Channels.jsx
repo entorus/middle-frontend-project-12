@@ -27,6 +27,7 @@ import {
   editChannel 
 } from '../slices/channelsSlice'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 
 function Channels() {
   const { t } = useTranslation()
@@ -70,23 +71,34 @@ function Channels() {
   }
 
   const handleSubmit = async ({ channelName }, actions) => {
-    if (modalMode === 'create') {
-      await dispatch(
-        createChannel({
-          name: channelName
-        })
+    try {
+      if (modalMode === 'create') {
+        await dispatch(
+          createChannel({
+            name: channelName
+          })
+        ).unwrap()
+      }else{
+        await dispatch(
+          editChannel({
+            id: selectedChannel.id,
+            name: channelName
+          })
+        ).unwrap()
+      }
+      toast.success(t('toast.channelCreated'))
+      handleClose()
+      actions.resetForm()
+    } catch (error) {
+      toast.error(error)
+      actions.setFieldError(
+        'channelName',
+        error
       )
-    }else{
-      await dispatch(
-        editChannel({
-          id: selectedChannel.id,
-          name: channelName
-        })
-      )
+    } finally {
+      actions.setSubmitting(false)
     }
-    actions.resetForm()
     actions.setSubmitting(false)
-    handleClose()
   }
 
   const handleDelete = async ({ id }) => {
