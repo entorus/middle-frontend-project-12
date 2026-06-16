@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Button, Form, InputGroup } from 'react-bootstrap'
 import { sendMessage } from '../slices/messagesSlice'
 import { useTranslation } from 'react-i18next'
+import profanity from '../profanity.js'
 
 function Messages() {
   const { t } = useTranslation()
@@ -26,7 +27,7 @@ function Messages() {
       return
     await dispatch(
       sendMessage({
-        body: trimmedInput,
+        body: profanity.clean(trimmedInput),
         channelId: currentChannelId,
         username,
       })

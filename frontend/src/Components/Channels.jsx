@@ -28,6 +28,7 @@ import {
 } from '../slices/channelsSlice'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import profanity from '../profanity.js'
 
 function Channels() {
   const { t } = useTranslation()
@@ -72,10 +73,11 @@ function Channels() {
 
   const handleSubmit = async ({ channelName }, actions) => {
     try {
+      const filteredName = profanity.clean(channelName.trim())
       if (modalMode === 'create') {
         await dispatch(
           createChannel({
-            name: channelName
+            name: filteredName
           })
         ).unwrap()
         toast.success(t('toast.channelCreated'))
@@ -83,7 +85,7 @@ function Channels() {
         await dispatch(
           editChannel({
             id: selectedChannel.id,
-            name: channelName
+            name: filteredName
           })
         ).unwrap()
         toast.success(t('toast.channelUpdated'))
