@@ -9,7 +9,7 @@ const resources = {
       },
       toast: {
         channelCreated: 'Канал создан',
-        channelDeleted: 'Канал удален',
+        channelDeleted: 'Канал удалён',
         channelUpdated: 'Канал переименован'
       },
       forms: {
