@@ -203,6 +203,9 @@ function Channels() {
                   <p className="mb-0">{t('channels.modal.removeConfirmation')}</p>
                 ) : (
                   <Form id="channel-form">
+                    <label className="form-label" htmlFor="channelName">
+                      {t('channels.field.name')}
+                    </label>
                     <Field
                       id="channelName"
                       type="text"
@@ -211,7 +214,6 @@ function Channels() {
                       className={`form-control ${
                         errors.channelName && touched.channelName ? 'is-invalid' : ''
                       }`}
-                      placeholder={t('channels.field.name')}
                     />
 
                     <ErrorMessage
