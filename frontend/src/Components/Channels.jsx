@@ -204,6 +204,7 @@ function Channels() {
                 ) : (
                   <Form id="channel-form">
                     <Field
+                      id="channelName"
                       type="text"
                       name="channelName"
                       innerRef={inputRef}
