@@ -29,7 +29,7 @@ const LoginPage = () => {
       dispatch(setCredentials(user))
       navigate('/')
     } catch(error) {
-      const errorMessage = (error.status === 401) ? 'Неверный логин пароль' : error.response?.data?.message ||
+      const errorMessage = (error.status === 401) ? t('forms.errors.invalidCredentials') : error.response?.data?.message ||
       error.response?.data?.error ||
       error.message
       setServerError(errorMessage)
