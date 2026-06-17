@@ -52,6 +52,7 @@ const resources = {
           rename: 'Переименовать',
           cancel: 'Отменить',
           submit: 'Отправить',
+          manage: 'Управление каналом'
         },
         field: {
           name: 'Имя канала',

@@ -152,7 +152,9 @@ function Channels() {
               ? (
                 <Dropdown as={ButtonGroup} className='w-100'>
                   <Button onClick={() => dispatch(setCurrentChannelId(channel.id))} variant="secondary" className='w-100 rounded-0 text-start text-truncate'># {channel.name}</Button>
-                  <Dropdown.Toggle split variant="secondary" id="dropdown-split-basic" />
+                  <Dropdown.Toggle split variant="secondary" id="dropdown-split-basic">
+                    <span class="visually-hidden">{t('channels.actions.manage')}</span>
+                  </Dropdown.Toggle>
                   <Dropdown.Menu>
                     <Dropdown.Item onClick={(e) => showConfirmDeleteModal(e, channel)} href="#">{t('channels.actions.remove')}</Dropdown.Item>
                     <Dropdown.Item onClick={(e) => showEditModal(e, channel)} href="#">{t('channels.actions.rename')}</Dropdown.Item>
