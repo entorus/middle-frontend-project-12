@@ -13,14 +13,13 @@ function Header() {
 
   return (
     <Navbar
-      bg="primary"
       expand="lg"
-      className="bg-body-tertiary justify-content-between"
+      className="bg-body-tertiary shadow-sm"
       data-bs-theme="dark"
     >
       <Container>
         <Navbar.Brand href="/">Hexlet Chat</Navbar.Brand>
-        {isAuthenticated && <Button onClick={handleLogout}>{t('navigation.logout')}</Button>}
+        {isAuthenticated && <Button variant="outline-light" size="sm" onClick={handleLogout}>{t('navigation.logout')}</Button>}
       </Container>
     </Navbar>
   )

@@ -44,7 +44,7 @@ function Messages() {
       <h2>{t('messages.title')}</h2>
 
       {currentChannelMessages.map((message) => (
-        <div key={message.id}>
+        <div  className='mb-2' key={message.id}>
           <b>{message.username}</b>: {message.body}
         </div>
       ))}

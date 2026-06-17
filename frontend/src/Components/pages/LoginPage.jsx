@@ -47,8 +47,8 @@ const LoginPage = () => {
             >
               {() => (
                 <Form>
-                  <div className="form-group">
-                    <label htmlFor="username">{t('forms.nickname')}</label>
+                  <div className="mb-3">
+                    <label className="form-label" htmlFor="username">{t('forms.nickname')}</label>
                     <Field
                       type="text"
                       name="username"
@@ -61,8 +61,8 @@ const LoginPage = () => {
                       className="invalid-feedback"
                     />
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="password">{t('forms.password')}</label>
+                  <div className="mb-3">
+                    <label className="form-label" htmlFor="password">{t('forms.password')}</label>
                     <Field
                       type="password"
                       name="password"
@@ -75,8 +75,8 @@ const LoginPage = () => {
                       className="invalid-feedback"
                     />
                   </div>
-                  {serverError && <div>{serverError}</div>}
-                  <button type="submit" className="btn btn-primary">{t('forms.enter')}</button>
+                  {serverError && <div className='alert alert-danger'>{serverError}</div>}
+                  <button type="submit" className="btn btn-primary w-100 mt-2">{t('forms.enter')}</button>
                 </Form>
               )}
             </Formik>

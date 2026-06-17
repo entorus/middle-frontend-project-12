@@ -135,7 +135,7 @@ function Channels() {
 
   return (
     <div>
-      <div className='d-flex justify-content-between'>
+      <div className='d-flex justify-content-between mb-3'>
         <h2>Каналы</h2>
         <Button size="sm" variant="primary" onClick={handleShowCreate}>+</Button>
       </div>

@@ -12,7 +12,7 @@ function App() {
   return (
     <div className="app">
       <Header />
-      <Container>
+      <Container className="py-4 py-lg-5">
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<MainPage/> } />

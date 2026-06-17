@@ -33,11 +33,11 @@ const MainPage = () => {
 
   return (
     <SocketProvider>
-      <Row>
-        <Col md={2}>
+      <Row className="g-3">
+        <Col md={4} lg={3}>
           <Channels />
         </Col>
-        <Col>
+        <Col md={8} lg={9}>
           <Messages />
         </Col>
       </Row>

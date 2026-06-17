@@ -57,8 +57,8 @@ function RegisterPage() {
             >
               {({ errors, touched }) => (
                 <Form>
-                  <div className="form-group">
-                    <label htmlFor="username">{t('forms.username')}</label>
+                  <div className="mb-3">
+                    <label className='form-label' htmlFor="username">{t('forms.username')}</label>
                     <Field
                       type="text"
                       name="username"
@@ -73,8 +73,8 @@ function RegisterPage() {
                       className="invalid-feedback"
                     />
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="password">{t('forms.password')}</label>
+                  <div className="mb-3">
+                    <label className='form-label' htmlFor="password">{t('forms.password')}</label>
                     <Field
                       type="password"
                       name="password"
@@ -89,8 +89,8 @@ function RegisterPage() {
                       className="invalid-feedback"
                     />
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="confirmPassword">{t('forms.confirmPassword')}</label>
+                  <div className="mb-3">
+                    <label className='form-label' htmlFor="confirmPassword">{t('forms.confirmPassword')}</label>
                     <Field
                       type="password"
                       name="confirmPassword"
@@ -107,8 +107,8 @@ function RegisterPage() {
                       className="invalid-feedback"
                     />
                   </div>
-                  {serverError && <div className="text-danger">{serverError}</div>}
-                  <Button type='submit'>{t('forms.signin')}</Button>
+                  {serverError && <div className="alert alert-danger">{serverError}</div>}
+                  <Button className="w-100 mt-2" type='submit'>{t('forms.signin')}</Button>
                 </Form>
               )}
             </Formik>
