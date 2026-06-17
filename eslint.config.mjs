@@ -9,7 +9,7 @@ import eslintReact from '@eslint-react/eslint-plugin'
 
 export default defineConfig([
   {
-    ignores: ['dist/**', 'build/**', 'node_modules/**']
+    ignores: ['**/dist/**', '**/build/**', '**/node_modules/**']
   },
 
   prettier,

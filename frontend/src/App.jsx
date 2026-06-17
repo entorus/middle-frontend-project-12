@@ -7,30 +7,45 @@ import Header from './Components/layout/Header'
 import { Container } from 'react-bootstrap'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { Provider, ErrorBoundary } from '@rollbar/react'
+
+const rollbarAccessToken = import.meta.env.VITE_ROLLBAR_ACCESS_TOKEN
+
+const rollbarConfig = {
+  accessToken: rollbarAccessToken,
+  environment: import.meta.env.MODE,
+  enabled: Boolean(rollbarAccessToken),
+  captureUncaught: true,
+  captureUnhandledRejections: true,
+}
 
 function App() {
   return (
-    <div className="app">
-      <Header />
-      <Container className="py-4 py-lg-5">
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<MainPage/> } />
-            <Route path="login" element={<LoginPage />} />
-            <Route path="register" element={<RegisterPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </BrowserRouter>
-      </Container>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        closeOnClick
-        pauseOnHover
-        draggable
-      />
-    </div>
+    <Provider config={rollbarConfig}>
+      <ErrorBoundary>
+        <div className="app">
+          <Header />
+          <Container className="py-4 py-lg-5">
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<MainPage/> } />
+                <Route path="login" element={<LoginPage />} />
+                <Route path="register" element={<RegisterPage />} />
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+            </BrowserRouter>
+          </Container>
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            closeOnClick
+            pauseOnHover
+            draggable
+          />
+        </div>
+      </ErrorBoundary>
+    </Provider>
   )
 }
 
