@@ -28,10 +28,9 @@ const resources = {
         submit: 'Отправить',
       },
       validation: {
-        min3: 'Минимум 3 символа',
-        max20: 'Максимум 20 символов',
-        usernameRequired: 'Введите имя пользователя',
-        min6: 'Минимум 6 символов',
+        minMax: 'От 3 до 20 символов',
+        usernameRequired: 'Обязательное поле',
+        min6: 'Не менее 6 символов',
         passwordRequired: 'Введите пароль',
         confirmPassword: {
           match: 'Пароли должны совпадать',

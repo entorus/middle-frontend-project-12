@@ -15,8 +15,8 @@ function RegisterPage() {
 
   const validationSchema = Yup.object({
     username: Yup.string()
-      .min(3, t('validation.min3'))
-      .max(20, t('validation.max20'))
+      .min(3, t('validation.minMax'))
+      .max(20, t('validation.minMax'))
       .required(t('validation.usernameRequired')),
 
     password: Yup.string()
