@@ -68,8 +68,8 @@ export const removeChannel = createAsyncThunk(
 const initialState = {
   channels: [],
   currentChannelId: 1,
-  // isLoading: false,
-  // error: null,
+  isLoading: false,
+  error: null,
 }
 
 const channelsSlice = createSlice({
@@ -101,64 +101,64 @@ const channelsSlice = createSlice({
       state.isLoading = false
     },
   },
-  // extraReducers: (builder) => {
-  //   builder
-  //     .addCase(fetchChannels.pending, (state) => {
-  //       state.isLoading = true
-  //       state.error = null
-  //     })
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchChannels.pending, (state) => {
+        state.isLoading = true
+        state.error = null
+      })
 
-  //     .addCase(fetchChannels.fulfilled, (state, action) => {
-  //       state.isLoading = false
-  //       state.channels = action.payload
-  //     })
+      .addCase(fetchChannels.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.channels = action.payload
+      })
 
-  //     .addCase(fetchChannels.rejected, (state, action) => {
-  //       state.isLoading = false
-  //       state.error = action.payload || 'Ошибка загрузки каналов'
-  //     })
-  //     .addCase(createChannel.pending, (state) => {
-  //       state.isLoading = true
-  //       state.error = null
-  //     })
+      .addCase(fetchChannels.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload
+      })
+      .addCase(createChannel.pending, (state) => {
+        state.isLoading = true
+        state.error = null
+      })
       
-  //     .addCase(createChannel.fulfilled, (state, action) => {
-  //       state.isLoading = false
-  //       state.currentChannelId = action.payload.id
-  //     })
+      .addCase(createChannel.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.currentChannelId = action.payload.id
+      })
       
-  //     .addCase(createChannel.rejected, (state, action) => {
-  //       state.isLoading = false
-  //       state.error = action.payload || 'Ошибка создания канала'
-  //     })
-  //     .addCase(editChannel.pending, (state) => {
-  //       state.isLoading = true
-  //       state.error = null
-  //     })
+      .addCase(createChannel.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload
+      })
+      .addCase(editChannel.pending, (state) => {
+        state.isLoading = true
+        state.error = null
+      })
       
-  //     .addCase(editChannel.fulfilled, (state) => {
-  //       state.isLoading = false
-  //     })
+      .addCase(editChannel.fulfilled, (state) => {
+        state.isLoading = false
+      })
       
-  //     .addCase(editChannel.rejected, (state, action) => {
-  //       state.isLoading = false
-  //       state.error = action.payload || 'Ошибка создания канала'
-  //     })
-  //     .addCase(removeChannel.pending, (state) => {
-  //       state.isLoading = true
-  //       state.error = null
-  //     })
+      .addCase(editChannel.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload 
+      })
+      .addCase(removeChannel.pending, (state) => {
+        state.isLoading = true
+        state.error = null
+      })
       
-  //     .addCase(removeChannel.fulfilled, (state) => {
-  //       state.isLoading = true
-  //       state.error = null
-  //     })
+      .addCase(removeChannel.fulfilled, (state) => {
+        state.isLoading = true
+        state.error = null
+      })
       
-  //     .addCase(removeChannel.rejected, (state, action) => {
-  //       state.isLoading = false
-  //       state.error = action.payload || 'Ошибка удаления канала'
-  //     })
-  // },
+      .addCase(removeChannel.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload
+      })
+  },
 })
 
 export const { 
