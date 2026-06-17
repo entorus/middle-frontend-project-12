@@ -10,7 +10,7 @@ const resources = {
       toast: {
         channelCreated: 'Канал создан',
         channelDeleted: 'Канал удален',
-        channelUpdated: 'Канал обновлен'
+        channelUpdated: 'Канал переименован'
       },
       forms: {
         nickname: 'Ваш ник',
