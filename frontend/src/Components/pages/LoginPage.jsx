@@ -82,7 +82,7 @@ const LoginPage = () => {
             </Formik>
           </Card.Body>
           <Card.Footer>
-            {t('forms.noAccount')} <Link to='/register'>{t('forms.registration')}</Link>
+            {t('forms.noAccount')} <Link to='/signup'>{t('forms.registration')}</Link>
           </Card.Footer>
         </Card>
       </Col>
