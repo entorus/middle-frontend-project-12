@@ -34,8 +34,8 @@ export const sendMessage = createAsyncThunk(
 
 const initialState = {
   items: [],
-  isLoading: false,
-  error: null,
+  // isLoading: false,
+  // error: null,
 }
 
 const messagesSlice = createSlice({
@@ -50,34 +50,34 @@ const messagesSlice = createSlice({
       state.items = state.items.filter(item => item.channelId != action.payload.id)
     }
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchMessages.pending, (state) => {
-        state.isLoading = true
-        state.error = null
-      })
-      .addCase(fetchMessages.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.items = action.payload
-      })
-      .addCase(fetchMessages.rejected, (state, action) => {
-        state.isLoading = false
-        state.error = action.payload || 'Ошибка загрузки сообщений'
-      })
-      .addCase(sendMessage.pending, (state) => {
-        state.sendStatus = 'loading'
-        state.sendError = null
-      })
+  // extraReducers: (builder) => {
+  //   builder
+  //     .addCase(fetchMessages.pending, (state) => {
+  //       state.isLoading = true
+  //       state.error = null
+  //     })
+  //     .addCase(fetchMessages.fulfilled, (state, action) => {
+  //       state.isLoading = false
+  //       state.items = action.payload
+  //     })
+  //     .addCase(fetchMessages.rejected, (state, action) => {
+  //       state.isLoading = false
+  //       state.error = action.payload || 'Ошибка загрузки сообщений'
+  //     })
+  //     .addCase(sendMessage.pending, (state) => {
+  //       state.sendStatus = 'loading'
+  //       state.sendError = null
+  //     })
 
-      .addCase(sendMessage.fulfilled, (state) => {
-        state.sendStatus = 'succeeded'
-      })
+  //     .addCase(sendMessage.fulfilled, (state) => {
+  //       state.sendStatus = 'succeeded'
+  //     })
 
-      .addCase(sendMessage.rejected, (state, action) => {
-        state.sendStatus = 'failed'
-        state.sendError = action.payload || 'Ошибка отправки сообщения'
-      })
-  },
+  //     .addCase(sendMessage.rejected, (state, action) => {
+  //       state.sendStatus = 'failed'
+  //       state.sendError = action.payload || 'Ошибка отправки сообщения'
+  //     })
+  // },
 })
 
 export const { addMessageToState, removeMessagesById } = messagesSlice.actions
