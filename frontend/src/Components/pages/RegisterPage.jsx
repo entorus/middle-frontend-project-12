@@ -60,6 +60,7 @@ function RegisterPage() {
                   <div className="mb-3">
                     <label className='form-label' htmlFor="username">{t('forms.username')}</label>
                     <Field
+                      id="username"
                       type="text"
                       name="username"
                       className={`form-control ${
@@ -76,6 +77,7 @@ function RegisterPage() {
                   <div className="mb-3">
                     <label className='form-label' htmlFor="password">{t('forms.password')}</label>
                     <Field
+                      id="password"
                       type="password"
                       name="password"
                       className={`form-control ${
@@ -92,6 +94,7 @@ function RegisterPage() {
                   <div className="mb-3">
                     <label className='form-label' htmlFor="confirmPassword">{t('forms.confirmPassword')}</label>
                     <Field
+                      id="confirmPassword"
                       type="password"
                       name="confirmPassword"
                       className={`form-control ${
