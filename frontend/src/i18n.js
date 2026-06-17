@@ -73,6 +73,7 @@ const resources = {
         title: 'Сообщения',
         input: {
           placeholder: 'Введите сообщение...',
+          aria: 'Новое сообщение'
         },
       },
       errors: {

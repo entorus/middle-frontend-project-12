@@ -51,7 +51,8 @@ function Messages() {
 
       <Form onSubmit={handleSubmit}>
         <InputGroup className="mb-3">
-          <Form.Control 
+          <Form.Control
+            aria-label={t('messages.input.aria')}
             value={text}
             onChange={handleChange}
             placeholder={t('messages.input.placeholder')}
