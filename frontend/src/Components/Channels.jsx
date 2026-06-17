@@ -153,7 +153,7 @@ function Channels() {
                 <Dropdown as={ButtonGroup} className='w-100'>
                   <Button onClick={() => dispatch(setCurrentChannelId(channel.id))} variant="secondary" className='w-100 rounded-0 text-start text-truncate'># {channel.name}</Button>
                   <Dropdown.Toggle split variant="secondary" id="dropdown-split-basic">
-                    <span class="visually-hidden">{t('channels.actions.manage')}</span>
+                    <span className="visually-hidden">{t('channels.actions.manage')}</span>
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
                     <Dropdown.Item onClick={(e) => showConfirmDeleteModal(e, channel)} href="#">{t('channels.actions.remove')}</Dropdown.Item>
@@ -180,11 +180,13 @@ function Channels() {
           const isDeleteMode = modalMode === 'delete'
           const isCreateMode = modalMode === 'create'
 
-          const modalTitle = isDeleteMode
-            ? t('channels.modal.removeTitle')
-            : isCreateMode
-              ? t('channels.modal.addTitle')
-              : t('channels.modal.renameTitle')
+          let modalTitle = t('channels.modal.renameTitle')
+
+          if (isDeleteMode) {
+            modalTitle = t('channels.modal.removeTitle')
+          } else if (isCreateMode) {
+            modalTitle = t('channels.modal.addTitle')
+          }
 
           const submitButtonText = isDeleteMode
             ? t('channels.actions.remove')
