@@ -1,6 +1,5 @@
 import filter from 'leo-profanity'
 
-
 filter.loadDictionary('en')
 const englishWords = filter.list()
 filter.loadDictionary('ru')
