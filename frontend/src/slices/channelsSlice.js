@@ -82,7 +82,6 @@ const channelsSlice = createSlice({
     removeChannelFromState(state, action) {
       const { id } = action.payload
       state.channels = state.channels.filter(ch => ch.id !== id)
-      console.log(id, state.currentChannelId)
       if (id == state.currentChannelId) {
         state.currentChannelId = 1
       }
@@ -94,11 +93,6 @@ const channelsSlice = createSlice({
     },
     setCurrentChannelId(state, action) {
       state.currentChannelId = Number(action.payload)
-    },
-    clearChannels(state) {
-      state.channels = []
-      state.error = null
-      state.isLoading = false
     },
   },
   extraReducers: (builder) => {
@@ -150,7 +144,7 @@ const channelsSlice = createSlice({
       })
       
       .addCase(removeChannel.fulfilled, (state) => {
-        state.isLoading = true
+        state.isLoading = false
         state.error = null
       })
       
@@ -163,7 +157,6 @@ const channelsSlice = createSlice({
 
 export const { 
   addChannelToState, 
-  clearChannels, 
   removeChannelFromState, 
   renameChannelInState,
   setCurrentChannelId 

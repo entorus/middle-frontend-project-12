@@ -46,7 +46,6 @@ const messagesSlice = createSlice({
       state.items.push(action.payload)
     },
     removeMessagesById(state, action) {
-      console.log(action)
       state.items = state.items.filter(item => item.channelId != action.payload.id)
     }
   },
@@ -63,19 +62,6 @@ const messagesSlice = createSlice({
       .addCase(fetchMessages.rejected, (state, action) => {
         state.isLoading = false
         state.error = action.payload
-      })
-      .addCase(sendMessage.pending, (state) => {
-        state.sendStatus = 'loading'
-        state.sendError = null
-      })
-
-      .addCase(sendMessage.fulfilled, (state) => {
-        state.sendStatus = 'succeeded'
-      })
-
-      .addCase(sendMessage.rejected, (state, action) => {
-        state.sendStatus = 'failed'
-        state.sendError = action.payload
       })
   },
 })
