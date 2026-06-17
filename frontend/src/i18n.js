@@ -54,7 +54,7 @@ const resources = {
           submit: 'Отправить',
         },
         field: {
-          name: 'Название канала',
+          name: 'Имя канала',
         },
         modal: {
           addTitle: 'Добавить канал',
