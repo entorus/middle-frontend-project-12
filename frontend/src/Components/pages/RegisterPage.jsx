@@ -2,31 +2,18 @@ import { useState } from 'react'
 import { Card, Button, Row, Col } from 'react-bootstrap'
 import { Form, Field, Formik, ErrorMessage } from 'formik'
 import { useDispatch } from 'react-redux'
-import * as Yup from 'yup'
 import { useNavigate } from 'react-router-dom'
 import { auth } from '../../api/queries/auth'
 import { setCredentials } from '../../slices/authSlice'
 import { useTranslation } from 'react-i18next'
+import signupFormValidation from '../../validation/signupFormValidation'
 
 function RegisterPage() {
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const validationSchema = Yup.object({
-    username: Yup.string()
-      .min(3, t('validation.minMax'))
-      .max(20, t('validation.minMax'))
-      .required(t('validation.usernameRequired')),
-
-    password: Yup.string()
-      .min(6, t('validation.min6'))
-      .required(t('validation.passwordRequired')),
-
-    confirmPassword: Yup.string()
-      .oneOf([Yup.ref('password')], t('validation.confirmPassword.match'))
-      .required(t('validation.confirmPassword.accept')),
-  })
+  const validationSchema = signupFormValidation(t)
 
   const [serverError, setServerError] = useState('')
   const handleSubmit = async ({ username, password }, actions) => {
