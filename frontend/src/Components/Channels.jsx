@@ -19,13 +19,13 @@ import {
   Formik, 
   ErrorMessage 
 } from 'formik'
-import * as Yup from 'yup'
 import { 
   createChannel, 
   removeChannel, 
   setCurrentChannelId, 
   editChannel 
 } from '../slices/channelsSlice'
+import channelsValidation from '../validation/channelsValidation.js'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import profanity from '../profanity.js'
@@ -42,28 +42,7 @@ function Channels() {
     (state) => state.channels
   )
 
-  const validationSchema = Yup.object({
-    channelName: Yup.string()
-      .min(3, t('validation.minMax'))
-      .max(20, t('validation.minMax'))
-      .required(t('validation.channelNameRequired'))
-      .test(
-        'is-unique',
-        t('validation.channelNameMustBeUnique'),
-        (value) => {
-          if (! value)
-            return true
-
-          const normalizedValue = value.trim().toLowerCase()
-
-          const alreadyExists = channels.some(
-            (channel) => channel.name.trim().toLowerCase() === normalizedValue
-          )
-
-          return ! alreadyExists
-        }
-      )
-  })
+  const validationSchema = channelsValidation(channels, t)
 
   const handleClose = () => setShowModal(false)
   const handleShowCreate = () => {
