@@ -146,10 +146,9 @@ function Channels() {
 
       <Formik
         initialValues={{
-          channelName:
-      modalMode === 'create'
-        ? ''
-        : selectedChannel?.name || '',
+          channelName: (modalMode === 'create') 
+            ? ''
+            : selectedChannel?.name || '',
         }}
         validationSchema={modalMode === 'delete' ? null : validationSchema}
         onSubmit={handleSubmit}
