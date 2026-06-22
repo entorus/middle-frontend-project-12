@@ -25,7 +25,9 @@ function App() {
       <ErrorBoundary>
         <div className="vh-100 d-flex flex-column bg-body-secondary">
           <Header />
-          <Container className="flex-grow-1 py-4 py-lg-5">
+          <Container
+            className="flex-grow-1 d-flex flex-column overflow-hidden py-4 py-lg-5"
+          >
             <BrowserRouter>
               <Routes>
                 <Route path="/" element={<MainPage/> } />

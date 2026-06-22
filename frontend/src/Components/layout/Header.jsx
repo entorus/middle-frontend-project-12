@@ -14,7 +14,7 @@ function Header() {
   return (
     <Navbar
       expand="lg"
-      className="bg-body-tertiary shadow-sm"
+      className="flex-shrink-0 bg-body-tertiary shadow-sm"
       data-bs-theme="dark"
     >
       <Container>

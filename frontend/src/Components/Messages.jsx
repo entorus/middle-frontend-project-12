@@ -49,13 +49,15 @@ function Messages() {
   }
 
   return (
-    <div className='d-flex flex-column h-100'>
-      <div className="border-bottom bg-body-tertiary px-4 py-3">
+    <div
+      className="h-100 d-flex flex-column flex-grow-1 overflow-hidden"
+    >
+      <div className="flex-shrink-0 border-bottom bg-body-tertiary px-4 py-3">
         <p className="fw-bold mb-1"># {currentChannelName}</p>
         <span className="small text-muted">{t('messages.count')}: {currentChannelMessagesCount}</span>
       </div>
 
-      <div className="flex-grow-1 overflow-auto px-4 py-3">
+      <div className="flex-grow-1 overflow-y-scroll px-4 py-3">
         {currentChannelMessages.map((message) => (
           <div className="mb-3" key={message.id}>
             <span className="fw-bold">{message.username}</span>
@@ -64,7 +66,7 @@ function Messages() {
         ))}
       </div>
 
-      <div className="border-top bg-body p-3">
+      <div className="flex-shrink-0 border-top bg-body p-3">
         <Form onSubmit={handleSubmit}>
           <InputGroup>
             <Form.Control

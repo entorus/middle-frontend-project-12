@@ -116,8 +116,10 @@ function Channels() {
   }
 
   return (
-    <div className="d-flex flex-column h-100">
-      <div className="d-flex justify-content-between align-items-center border-bottom px-3 py-3">
+    <div
+      className="h-100 d-flex flex-column flex-grow-1 overflow-hidden"
+    >
+      <div className="flex-shrink-0 d-flex justify-content-between align-items-center border-bottom px-3 py-3">
         <h2 className="h5 fw-bold mb-0">Каналы</h2>
         <Button
           size="sm"
@@ -129,7 +131,11 @@ function Channels() {
         </Button>
       </div>
 
-      <ListGroup as="ul" variant="flush" className="flex-grow-1 overflow-auto">
+      <ListGroup
+        as="ul"
+        variant="flush"
+        className="flex-grow-1 overflow-auto"
+      >
         {channels.map((channel) => {
           const isActive = Number(channel.id) === Number(currentChannelId)
           const buttonVariant = isActive ? 'primary' : 'light'
