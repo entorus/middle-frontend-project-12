@@ -72,6 +72,7 @@ const resources = {
       },
       messages: {
         title: 'Сообщения',
+        count: 'Сообщений в чате',
         input: {
           placeholder: 'Введите сообщение...',
           aria: 'Новое сообщение'

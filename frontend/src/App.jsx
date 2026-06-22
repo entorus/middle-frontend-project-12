@@ -23,9 +23,9 @@ function App() {
   return (
     <Provider config={rollbarConfig}>
       <ErrorBoundary>
-        <div className="app">
+        <div className="app vh-100">
           <Header />
-          <Container className="py-4 py-lg-5">
+          <Container className="py-4 py-lg-5 h-100">
             <BrowserRouter>
               <Routes>
                 <Route path="/" element={<MainPage/> } />

@@ -190,6 +190,7 @@ function Channels() {
                     </label>
                     <Field
                       id="channelName"
+                      autoComplete="off"
                       type="text"
                       name="channelName"
                       innerRef={inputRef}

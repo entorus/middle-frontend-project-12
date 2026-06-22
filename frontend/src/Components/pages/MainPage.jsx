@@ -33,11 +33,11 @@ const MainPage = () => {
 
   return (
     <SocketProvider>
-      <Row className="g-3">
+      <Row className="g-3 h-100">
         <Col md={4} lg={3}>
           <Channels />
         </Col>
-        <Col md={8} lg={9}>
+        <Col md={8} lg={9} className='border border-secondary rounded'>
           <Messages />
         </Col>
       </Row>

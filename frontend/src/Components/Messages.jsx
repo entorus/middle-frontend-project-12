@@ -19,6 +19,15 @@ function Messages() {
     (message) => message.channelId === currentChannelId
   )
 
+  const currentChannelMessagesCount = currentChannelMessages ? currentChannelMessages.length : 0
+  const currentChannelName = useSelector((state) => {
+    const currentChannel = state.channels.channels.find(
+      (channel) => Number(channel.id) === Number(state.channels.currentChannelId)
+    )
+
+    return currentChannel?.name || ''
+  })
+
   const handleSubmit = async (event) => {
     event.preventDefault()
     const trimmedInput = text.trim()
@@ -40,8 +49,11 @@ function Messages() {
   }
 
   return (
-    <div>
-      <h2>{t('messages.title')}</h2>
+    <div className='d-flex flex-column h-100'>
+      <div className='border border-secondary rounded'>
+        <p><b># {currentChannelName}</b></p>
+        <span className='text-muted'>{t('messages.count')}: {currentChannelMessagesCount}</span>
+      </div>
 
       {currentChannelMessages.map((message) => (
         <div  className='mb-2' key={message.id}>
@@ -49,19 +61,22 @@ function Messages() {
         </div>
       ))}
 
-      <Form onSubmit={handleSubmit}>
-        <InputGroup className="mb-3">
-          <Form.Control
-            aria-label={t('messages.input.aria')}
-            value={text}
-            onChange={handleChange}
-            placeholder={t('messages.input.placeholder')}
-          />
-          <Button type="submit" variant="outline-secondary" id="button-addon2">
-            {t('forms.submit')}
-          </Button>
-        </InputGroup>
-      </Form>
+      <div className='mt-auto px-5 py-3'>
+        <Form onSubmit={handleSubmit}>
+          <InputGroup className="mb-3">
+            <Form.Control
+              autoComplete="off"
+              aria-label={t('messages.input.aria')}
+              value={text}
+              onChange={handleChange}
+              placeholder={t('messages.input.placeholder')}
+            />
+            <Button type="submit" variant="outline-secondary" id="button-addon2">
+              {t('forms.submit')}
+            </Button>
+          </InputGroup>
+        </Form>
+      </div>
     </div>
   )
 }

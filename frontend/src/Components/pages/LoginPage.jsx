@@ -21,6 +21,10 @@ const LoginPage = () => {
 
   const [serverError, setServerError] = useState('')
   const handleSubmit = async ({ username, password }, actions) => {
+    if (! username || ! password) {
+      setServerError(t('forms.errors.invalidCredentials'))
+      return
+    }
     setServerError('')
     try {
       const authInfo = await auth.login({ username, password })
@@ -51,6 +55,7 @@ const LoginPage = () => {
                     <label className="form-label" htmlFor="username">{t('forms.nickname')}</label>
                     <Field
                       id="username"
+                      autoComplete="off"
                       type="text"
                       name="username"
                       className="form-control"
@@ -66,6 +71,7 @@ const LoginPage = () => {
                     <label className="form-label" htmlFor="password">{t('forms.password')}</label>
                     <Field
                       id="password"
+                      autoComplete="off"
                       type="password"
                       name="password"
                       className="form-control"
@@ -83,7 +89,7 @@ const LoginPage = () => {
               )}
             </Formik>
           </Card.Body>
-          <Card.Footer>
+          <Card.Footer className='text-center'>
             {t('forms.noAccount')} <Link to='/signup'>{t('forms.registration')}</Link>
           </Card.Footer>
         </Card>

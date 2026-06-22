@@ -48,6 +48,7 @@ function RegisterPage() {
                     <label className='form-label' htmlFor="username">{t('forms.username')}</label>
                     <Field
                       id="username"
+                      autoComplete="off"
                       type="text"
                       name="username"
                       className={`form-control ${
@@ -65,6 +66,7 @@ function RegisterPage() {
                     <label className='form-label' htmlFor="password">{t('forms.password')}</label>
                     <Field
                       id="password"
+                      autoComplete="off"
                       type="password"
                       name="password"
                       className={`form-control ${
@@ -82,6 +84,7 @@ function RegisterPage() {
                     <label className='form-label' htmlFor="confirmPassword">{t('forms.confirmPassword')}</label>
                     <Field
                       id="confirmPassword"
+                      autoComplete="off"
                       type="password"
                       name="confirmPassword"
                       className={`form-control ${
