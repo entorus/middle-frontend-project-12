@@ -93,7 +93,7 @@ function Messages() {
               onChange={handleChange}
               placeholder={t('messages.input.placeholder')}
             />
-            <Button type="submit" variant="primary" id="button-addon2">
+            <Button type="submit" variant="primary">
               {t('forms.submit')}
             </Button>
           </InputGroup>
