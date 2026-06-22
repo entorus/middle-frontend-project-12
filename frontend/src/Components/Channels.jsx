@@ -124,7 +124,7 @@ function Channels() {
         <Button
           size="sm"
           variant="primary"
-          className="d-inline-flex align-items-center justify-content-center lh-1 px-2 py-1"
+          className="px-2 py-1 btn btn-primary btn-sm"
           onClick={handleShowCreate}
         >
           +
