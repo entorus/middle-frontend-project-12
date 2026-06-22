@@ -41,6 +41,9 @@ function Channels() {
   const { channels } = useSelector(
     (state) => state.channels
   )
+  const currentChannelId = useSelector(
+    (state) => state.channels.currentChannelId
+  )
 
   const validationSchema = channelsValidation(channels, t)
 
@@ -113,35 +116,66 @@ function Channels() {
   }
 
   return (
-    <div>
-      <div className='d-flex justify-content-between mb-3'>
-        <h2>Каналы</h2>
-        <Button size="sm" variant="primary" onClick={handleShowCreate}>+</Button>
+    <div className="d-flex flex-column h-100">
+      <div className="d-flex justify-content-between align-items-center border-bottom px-3 py-3">
+        <h2 className="h5 fw-bold mb-0">Каналы</h2>
+        <Button
+          size="sm"
+          variant="primary"
+          className="d-inline-flex align-items-center justify-content-center lh-1 px-2 py-1"
+          onClick={handleShowCreate}
+        >
+          +
+        </Button>
       </div>
 
-      <ListGroup as="ul">
-        {channels.map((channel) => (
-          <ListGroup.Item 
-            action 
-            as="li" 
-            key={channel.id}
-            className='nav-item w-100 p-0'
-          >
-            {channel.removable 
-              ? (
-                <Dropdown as={ButtonGroup} className='w-100'>
-                  <Button onClick={() => dispatch(setCurrentChannelId(channel.id))} variant="secondary" className='w-100 rounded-0 text-start text-truncate'># {channel.name}</Button>
-                  <Dropdown.Toggle split variant="secondary" id="dropdown-split-basic">
-                    <span className="visually-hidden">{t('channels.actions.manage')}</span>
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    <Dropdown.Item onClick={(e) => showConfirmDeleteModal(e, channel)} href="#">{t('channels.actions.remove')}</Dropdown.Item>
-                    <Dropdown.Item onClick={(e) => showEditModal(e, channel)} href="#">{t('channels.actions.rename')}</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>) 
-              : (<Button onClick={() => dispatch(setCurrentChannelId(channel.id))} variant="light" className='w-100 rounded-0 text-start'># {channel.name}</Button>)}
-          </ListGroup.Item>
-        ))}
+      <ListGroup as="ul" variant="flush" className="flex-grow-1 overflow-auto">
+        {channels.map((channel) => {
+          const isActive = Number(channel.id) === Number(currentChannelId)
+          const buttonVariant = isActive ? 'primary' : 'light'
+
+          return (
+            <ListGroup.Item 
+              action 
+              as="li" 
+              key={channel.id}
+              className="nav-item w-100 p-0 border-bottom"
+            >
+              {channel.removable 
+                ? (
+                  <Dropdown as={ButtonGroup} className="w-100">
+                    <Button
+                      onClick={() => dispatch(setCurrentChannelId(channel.id))}
+                      variant={buttonVariant}
+                      className="w-100 rounded-0 text-start text-truncate border-0 px-3 py-2"
+                    >
+                      # {channel.name}
+                    </Button>
+                    <Dropdown.Toggle
+                      split
+                      variant={buttonVariant}
+                      className="rounded-0 border-0 px-3"
+                      id={`channel-actions-${channel.id}`}
+                    >
+                      <span className="visually-hidden">{t('channels.actions.manage')}</span>
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      <Dropdown.Item onClick={(e) => showConfirmDeleteModal(e, channel)} href="#">{t('channels.actions.remove')}</Dropdown.Item>
+                      <Dropdown.Item onClick={(e) => showEditModal(e, channel)} href="#">{t('channels.actions.rename')}</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>) 
+                : (
+                  <Button
+                    onClick={() => dispatch(setCurrentChannelId(channel.id))}
+                    variant={buttonVariant}
+                    className="w-100 rounded-0 text-start text-truncate border-0 px-3 py-2"
+                  >
+                    # {channel.name}
+                  </Button>
+                )}
+            </ListGroup.Item>
+          )
+        })}
       </ListGroup>
 
       <Formik

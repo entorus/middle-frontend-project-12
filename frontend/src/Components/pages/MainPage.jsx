@@ -6,7 +6,7 @@ import { fetchChannels } from '../../slices/channelsSlice'
 import { fetchMessages } from '../../slices/messagesSlice'
 import Messages from '../Messages'
 import Channels from '../Channels'
-import { Row, Col } from 'react-bootstrap'
+import { Card, Row, Col } from 'react-bootstrap'
 import SocketProvider from '../SocketProvider'
 import { toast } from 'react-toastify'
 
@@ -33,14 +33,16 @@ const MainPage = () => {
 
   return (
     <SocketProvider>
-      <Row className="g-3 h-100">
-        <Col md={4} lg={3}>
-          <Channels />
-        </Col>
-        <Col md={8} lg={9} className='border border-secondary rounded'>
-          <Messages />
-        </Col>
-      </Row>
+      <Card className="h-100 shadow-sm overflow-hidden">
+        <Row className="g-0 h-100">
+          <Col md={4} lg={3} className="h-100 border-end bg-body-tertiary">
+            <Channels />
+          </Col>
+          <Col md={8} lg={9} className="h-100 bg-body">
+            <Messages />
+          </Col>
+        </Row>
+      </Card>
     </SocketProvider>
   )
 }

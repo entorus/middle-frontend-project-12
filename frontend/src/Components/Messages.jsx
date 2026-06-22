@@ -50,20 +50,23 @@ function Messages() {
 
   return (
     <div className='d-flex flex-column h-100'>
-      <div className='border border-secondary rounded'>
-        <p><b># {currentChannelName}</b></p>
-        <span className='text-muted'>{t('messages.count')}: {currentChannelMessagesCount}</span>
+      <div className="border-bottom bg-body-tertiary px-4 py-3">
+        <p className="fw-bold mb-1"># {currentChannelName}</p>
+        <span className="small text-muted">{t('messages.count')}: {currentChannelMessagesCount}</span>
       </div>
 
-      {currentChannelMessages.map((message) => (
-        <div  className='mb-2' key={message.id}>
-          <b>{message.username}</b>: {message.body}
-        </div>
-      ))}
+      <div className="flex-grow-1 overflow-auto px-4 py-3">
+        {currentChannelMessages.map((message) => (
+          <div className="mb-3" key={message.id}>
+            <span className="fw-bold">{message.username}</span>
+            <span className="text-break">: {message.body}</span>
+          </div>
+        ))}
+      </div>
 
-      <div className='mt-auto px-5 py-3'>
+      <div className="border-top bg-body p-3">
         <Form onSubmit={handleSubmit}>
-          <InputGroup className="mb-3">
+          <InputGroup>
             <Form.Control
               autoComplete="off"
               aria-label={t('messages.input.aria')}
@@ -71,7 +74,7 @@ function Messages() {
               onChange={handleChange}
               placeholder={t('messages.input.placeholder')}
             />
-            <Button type="submit" variant="outline-secondary" id="button-addon2">
+            <Button type="submit" variant="primary" id="button-addon2">
               {t('forms.submit')}
             </Button>
           </InputGroup>
