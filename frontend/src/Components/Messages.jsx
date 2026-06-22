@@ -1,12 +1,24 @@
-import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Button, Form, InputGroup } from 'react-bootstrap'
+import { 
+  useState,
+  useRef
+} from 'react'
+import { 
+  useDispatch, 
+  useSelector 
+} from 'react-redux'
+import { 
+  Button, 
+  Form, 
+  InputGroup 
+} from 'react-bootstrap'
 import { sendMessage } from '../slices/messagesSlice'
 import { useTranslation } from 'react-i18next'
 import profanity from '../profanity.js'
 
 function Messages() {
   const { t } = useTranslation()
+  const messagesListRef = useRef(null)
+  const messageInputRef = useRef(null)
   const [text, setText] = useState('')
   const dispatch = useDispatch()
   const currentChannelId = useSelector(
@@ -42,6 +54,9 @@ function Messages() {
       })
     )
     setText('')
+    const block = messagesListRef.current
+    block.scrollTop = block.scrollHeight
+    messageInputRef.current?.focus()
   }
 
   const handleChange = (event) => {
@@ -57,7 +72,7 @@ function Messages() {
         <span className="small text-muted">{t('messages.count')}: {currentChannelMessagesCount}</span>
       </div>
 
-      <div className="flex-grow-1 overflow-y-scroll px-4 py-3">
+      <div ref={messagesListRef} className="flex-grow-1 overflow-y-scroll px-4 py-3">
         {currentChannelMessages.map((message) => (
           <div className="mb-3" key={message.id}>
             <span className="fw-bold">{message.username}</span>
@@ -70,6 +85,8 @@ function Messages() {
         <Form onSubmit={handleSubmit}>
           <InputGroup>
             <Form.Control
+              ref={messageInputRef}
+              autoFocus
               autoComplete="off"
               aria-label={t('messages.input.aria')}
               value={text}

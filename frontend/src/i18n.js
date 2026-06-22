@@ -42,6 +42,8 @@ const resources = {
       pages: {
         notFound: {
           title: 'Страница не найдена',
+          goTo: 'Но вы можете перейти на',
+          mainPage: 'главную страницу'
         },
       },
       channels: {
